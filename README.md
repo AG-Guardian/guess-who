@@ -29,7 +29,7 @@ Open the URL shown in the terminal (usually `http://localhost:5173`).
 | `/:attributeId` | Player view (random character for that attribute) |
 | `/about` | Rules and data documentation |
 
-Example player link: `https://your-domain.com/villains`
+Example player link: `https://your-domain.com/villains` — on GitHub project Pages replace with `https://<user>.github.io/<repo>/<attributeId>` (for example `/guess-who/villains`).
 
 ## Data model
 
@@ -54,6 +54,18 @@ See **[docs/DATA.md](docs/DATA.md)** for the import pipeline.
 | `npm run fandom-rebuild-game-data` | Rebuild game JSON from local `imported/` cache only (no API) |
 
 ## Deploy
+
+### GitHub Pages (this repo)
+
+1. Push **main** or **master** — the workflow [`.github/workflows/github-pages.yml`](.github/workflows/github-pages.yml) builds and publishes `dist/` automatically.
+2. On GitHub: **Settings → Pages → Build and deployment**.
+3. Set **Source** to **GitHub Actions** (first run may ask you to allow the workflow).
+
+The live URL is **`https://<your-username>.github.io/guess-who/`** (repo name equals the URL path segment). Routing and `/data/*.json` fetches use Vite [`base`](https://vite.dev/config/shared-options.html#base) derived from **`VITE_SITE_BASE`** in that workflow (`/${{ github.event.repository.name }}/`).
+
+The workflow copies `index.html` to `404.html` so client-side routes (`/about`, `/:attributeId`) work on static hosting.
+
+### Any static host
 
 ```bash
 npm run build

@@ -2,6 +2,12 @@ import type { Attribute, AttributeSummary, Character } from './types';
 
 const fetchOpts: RequestInit = { cache: 'no-store' };
 
+/** Public assets under `/public` (characters, attributes JSON). Honors `vite.config` `base`. */
+function publicAssetUrl(subpath: string): string {
+  const path = subpath.startsWith('/') ? subpath.slice(1) : subpath;
+  return `${import.meta.env.BASE_URL}${path}`;
+}
+
 export interface AttributesPayload {
   index: AttributeSummary[];
   attributes: Record<string, Attribute>;
@@ -10,7 +16,7 @@ export interface AttributesPayload {
 let attributesBundlePromise: Promise<AttributesPayload> | null = null;
 
 export async function loadCharacters(): Promise<Record<string, Character>> {
-  const res = await fetch('/data/characters.json', fetchOpts);
+  const res = await fetch(publicAssetUrl('data/characters.json'), fetchOpts);
   if (!res.ok) {
     throw new Error('Failed to load characters');
   }
@@ -24,7 +30,7 @@ export async function loadCharacters(): Promise<Record<string, Character>> {
 export function loadAttributesData(): Promise<AttributesPayload> {
   if (!attributesBundlePromise) {
     attributesBundlePromise = (async () => {
-      const res = await fetch('/data/attributes.json', fetchOpts);
+      const res = await fetch(publicAssetUrl('data/attributes.json'), fetchOpts);
       if (!res.ok) {
         throw new Error('Failed to load attributes');
       }
@@ -108,5 +114,6 @@ export async function createRandomRound() {
 }
 
 export function buildPlayerPath(attributeId: string): string {
-  return `/${attributeId}`;
+  const baseTrim = import.meta.env.BASE_URL.replace(/\/+$/, '');
+  return baseTrim ? `${baseTrim}/${attributeId}` : `/${attributeId}`;
 }
