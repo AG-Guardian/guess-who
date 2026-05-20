@@ -1,0 +1,7 @@
+node_modules
+dist
+.DS_Store
+*.local
+
+# Local Fandom pipeline cache (run npm run fandom-populate to create)
+public/data/imported/

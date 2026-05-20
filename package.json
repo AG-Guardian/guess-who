@@ -1,0 +1,35 @@
+{
+  "name": "guess-who",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "fandom-populate": "node scripts/fandom-populate.mjs",
+    "fandom-rebuild-game-data": "BUILD_ONLY=1 node scripts/fandom-populate.mjs",
+    "fandom-build-prefilter": "BUILD_ONLY=1 USE_PREFILTER=1 MIN_ATTRIBUTE_SIZE=50 MAX_ATTRIBUTE_SIZE=500 node scripts/fandom-populate.mjs",
+    "fandom-pipeline": "npm run fandom-populate"
+  },
+  "dependencies": {
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
+    "react-router-dom": "^7.15.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^24.12.3",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^4.7.0",
+    "eslint": "^10.3.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.2",
+    "globals": "^17.6.0",
+    "typescript": "~6.0.2",
+    "typescript-eslint": "^8.59.2",
+    "vite": "^6.4.2"
+  }
+}
